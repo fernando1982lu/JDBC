@@ -56,11 +56,11 @@ public class PersonasJDBC {
             System.out.println("Ejecutando query: " + SQL_INSERT);
             rows = stmt.executeUpdate(); //N° de registros afectados
             System.out.println("Registros afectados: " + rows);
-        }catch(SQLException e){
-            e.printStackTrace();
         }finally{
             Conexion.close(stmt);
-            Conexion.close(conn);
+            if(this.userConn == null){
+                Conexion.close(conn);
+            }
         }
         return rows;
         
@@ -72,7 +72,7 @@ public class PersonasJDBC {
      * @param apellido nuevo valor
      * @return int N° de registros modificados
      */
-    public int update(int id_persona, String nombre, String apellido){
+    public int update(int id_persona, String nombre, String apellido) throws SQLException{
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -87,11 +87,11 @@ public class PersonasJDBC {
             stmt.setInt(index, id_persona);
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizados: " + rows);
-        }catch(SQLException e){
-            e.printStackTrace();
         }finally{
             Conexion.close(stmt);
-            Conexion.close(conn);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
         }
         return rows;
     }
@@ -100,7 +100,7 @@ public class PersonasJDBC {
      * @param id_persona es la llave primaria
      * @return int N° registros afectados
      */
-    public int delete(int id_persona){
+    public int delete(int id_persona)throws SQLException{
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -112,11 +112,11 @@ public class PersonasJDBC {
             stmt.setInt(1, id_persona);
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
-        } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             Conexion.close(stmt);
-            Conexion.close(conn);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
         }
         return rows;
     }
@@ -124,7 +124,7 @@ public class PersonasJDBC {
     /**
      * Metodo que regresa el contenido de la tabla de personas
      */
-    public List<Persona> select() {
+    public List<Persona> select() throws SQLException{
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -138,11 +138,6 @@ public class PersonasJDBC {
                 int id_persona = rs.getInt(1);
                 String nombre = rs.getString(2);
                 String apellido = rs.getString(3);
-                /*System.out.print(" " + id_persona);
-                 System.out.print(" " + nombre);
-                 System.out.print(" " + apellido);
-                 System.out.println();
-                 */
                 persona = new Persona();
                 persona.setId_persona(id_persona);
                 persona.setNombre(nombre);
@@ -150,12 +145,12 @@ public class PersonasJDBC {
                 personas.add(persona);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
+        }finally {
             Conexion.close(rs);
             Conexion.close(stmt);
-            Conexion.close(conn);
+            if (this.userConn == null ) {
+                Conexion.close(conn);
+            }
         }
         return personas;
     }

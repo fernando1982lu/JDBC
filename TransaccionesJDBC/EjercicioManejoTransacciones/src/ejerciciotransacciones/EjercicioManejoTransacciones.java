@@ -27,12 +27,14 @@ public class EjercicioManejoTransacciones {
                 conn.setAutoCommit(false);
             }
             PersonasJDBC personas = new PersonasJDBC(conn);
-                    
-            //Prueba del metodo insert
-            personas.insert("Jorgue", "Murcia123456789098765432123456789");
-
+            
             //Prueba del metodo update
             personas.update(2, "regreso2", "Regreso");
+            
+            //Prueba del metodo insert
+            personas.insert("Jorgue", "Murcia1234567890987654321234567812345678902134567890212345678909");
+
+            
 
             //Prueba del metodo delete
             //personasJDBC.delete(2);

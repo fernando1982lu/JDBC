@@ -1,5 +1,6 @@
 package murcia.fernando.transacciones.domain;
 
+
 /**
  *
  * @author fernando.murcia
