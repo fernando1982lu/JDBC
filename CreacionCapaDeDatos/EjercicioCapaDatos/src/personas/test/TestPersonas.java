@@ -26,17 +26,17 @@ public class TestPersonas {
         persona.setApellido("Gallegos");
         // Utilizamos la capa DAO para persistir el objeto DTO
         try{
-            personaDao.insert(persona);
+            //personaDao.insert(persona);
              
             //eliminamos un registro, el id 3
-            personaDao.delete( new PersonaDTO(1));
+            //personaDao.delete( new PersonaDTO(1));
             
             //actualizamos un registro
             PersonaDTO personaTmp = new PersonaDTO();
-            personaTmp.setId_persona(11);//actualizamos el registro 2
+            /*personaTmp.setId_persona(11);//actualizamos el registro 2
             personaTmp.setNombre("Mario");
             personaTmp.setApellido("lopez02");
-            personaDao.update(personaTmp);
+            personaDao.update(personaTmp);*/
             
             //Seleccionamos todos los registros
             List<PersonaDTO> personas = personaDao.select();
