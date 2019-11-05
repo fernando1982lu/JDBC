@@ -1,8 +1,8 @@
-package murcia.fernando.manejoPersonas.datos;
+package murcia.fernando.transacciones.datos;
 
 import java.sql.*;
 import java.util.*;
-import murcia.fernando.manejoPersonas.domain.Persona;
+import murcia.fernando.transacciones.domain.Persona;
 
 /**
  *
@@ -15,6 +15,7 @@ public class PersonasJDBC {
        prepareStatement, por lo que podemos utilizar parametros (signos de ?)
        los cuales posteriormente seran sustituidos por el parametro respectivo
     */
+    private java.sql.Connection userConn;
     
     private final String SQL_INSERT
             = "INSERT INTO persona (nombre, apellido) values(?, ?)";
@@ -29,6 +30,12 @@ public class PersonasJDBC {
             = "SELECT id_persona, nombre, apellido FROM persona ORDER BY id_persona";
     private int id_persona;
     
+    public PersonasJDBC(){
+        
+    }
+    public PersonasJDBC(Connection conn){
+        this.userConn = conn;
+    }
     /**
      * Metodo que inserta un registro en la tabla de persona
      * @param nombre
@@ -41,7 +48,7 @@ public class PersonasJDBC {
         ResultSet rs = null; // No se utiliza para este ejercicio
         int rows = 0; //Registros afectados
         try{
-            conn = Conexion.getConnection();
+            conn = (this.userConn != null) ? this.userConn : Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             int index = 1; // Controlador de Columnas
             stmt.setString(index++, nombre); //param 1 => ?
@@ -71,7 +78,7 @@ public class PersonasJDBC {
         PreparedStatement stmt = null;
         int rows = 0;
         try{
-            conn = Conexion.getConnection();
+            conn = (this.userConn != null) ? this.userConn : Conexion.getConnection();
             System.out.println("Ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
             int index = 1;
@@ -99,7 +106,7 @@ public class PersonasJDBC {
         PreparedStatement stmt = null;
         int rows = 0;
         try{
-            conn = Conexion.getConnection();
+            conn = (this.userConn != null) ? this.userConn : Conexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, id_persona);
@@ -124,7 +131,7 @@ public class PersonasJDBC {
         Persona persona = null;
         List<Persona> personas = new ArrayList<Persona>();
         try {
-            conn = Conexion.getConnection();
+            conn = (this.userConn != null) ? this.userConn : Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {

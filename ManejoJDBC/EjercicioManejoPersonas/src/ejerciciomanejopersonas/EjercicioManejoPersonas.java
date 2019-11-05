@@ -1,5 +1,6 @@
 package ejerciciomanejopersonas;
 
+import java.sql.SQLException;
 import java.util.List;
 import murcia.fernando.manejoPersonas.datos.PersonasJDBC;
 import murcia.fernando.manejoPersonas.domain.Persona;
@@ -11,16 +12,16 @@ import murcia.fernando.manejoPersonas.domain.Persona;
 public class EjercicioManejoPersonas {
 
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException{
         PersonasJDBC personasJDBC = new PersonasJDBC();
         //Prueba del metodo insert
-        //personasJDBC.insert("Alberto", "Juarez");
+        //personasJDBC.insert("Socorro", "Paredes");
         
         //Prueba del metodo update
-        //personasJDBC.update(2, "Nombre3", "Apellido3");
+        //personasJDBC.update(10, "socorrito", "Paredes");
 		
         //Prueba del metodo delete
-        //personasJDBC.delete(1);
+        personasJDBC.delete(2);
       
         //Prueba del metodo select
         //Uso de un objeto persona para encapsular la informacion
